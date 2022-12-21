@@ -13,7 +13,7 @@ class SegmentationHead(tfkl.Layer):
                  kernel_size=1, 
                  final_act='sigmoid',
                  ** kwargs):
-        super(SegmentationHead, self).__init__(name=name, **kwargs)
+        tfkl.Layer.__init__(self, name=name, **kwargs)
         self.num_classes = num_classes
         self.kernel_size = kernel_size
         self.final_act  = final_act
@@ -31,7 +31,7 @@ class SegmentationHead(tfkl.Layer):
         return x
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "num_classes": self.num_classes,
             "kernel_size": self.kernel_size,
@@ -42,7 +42,7 @@ class SegmentationHead(tfkl.Layer):
 
 class Conv2DReLu(tfkl.Layer):
     def __init__(self, filters, kernel_size, padding="same", strides=1, **kwargs):
-        super().__init__(**kwargs)
+        tfkl.Layer.__init__(self, **kwargs)
         self.filters = filters
         self.kernel_size = kernel_size
         self.padding = padding
@@ -63,7 +63,7 @@ class Conv2DReLu(tfkl.Layer):
         return x
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "filters": self.filters,
             "kernel_size": self.kernel_size,
@@ -75,7 +75,7 @@ class Conv2DReLu(tfkl.Layer):
 
 class DecoderBlock(tfkl.Layer):
     def __init__(self, filters, **kwargs):
-        super().__init__(**kwargs)
+        tfkl.Layer.__init__(self, **kwargs)
         self.filters = filters
 
     def build(self, input_shape):
@@ -93,7 +93,7 @@ class DecoderBlock(tfkl.Layer):
         return x
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "filters": self.filters,
         })
@@ -101,7 +101,7 @@ class DecoderBlock(tfkl.Layer):
 
 class DecoderCup(tfkl.Layer):
     def __init__(self, decoder_channels, n_skip=3, **kwargs):
-        super().__init__(**kwargs)
+        tfkl.Layer.__init__(self, **kwargs)
         self.decoder_channels = decoder_channels
         self.n_skip = n_skip
 
@@ -121,7 +121,7 @@ class DecoderCup(tfkl.Layer):
         return x
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "decoder_channels": self.decoder_channels,
             "n_skip": self.n_skip,

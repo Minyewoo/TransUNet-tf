@@ -10,7 +10,7 @@ class AddPositionEmbs(tfkl.Layer):
     """Adds (optionally learned) positional embeddings to the inputs."""
 
     def __init__(self, trainable=True, **kwargs):
-        super().__init__(trainable=trainable, **kwargs)
+        tfkl.Layer.__init__(self, trainable=trainable, **kwargs)
         self.trainable = trainable
 
     def build(self, input_shape):
@@ -32,7 +32,7 @@ class AddPositionEmbs(tfkl.Layer):
 
 class MultiHeadSelfAttention(tfkl.Layer):
     def __init__(self, *args, trainable=True, n_heads, **kwargs):
-        super().__init__(trainable=trainable, *args, **kwargs)
+        tfkl.Layer.__init__(self, trainable=trainable, *args, **kwargs)
         self.n_heads = n_heads
 
     def build(self, input_shape):
@@ -84,7 +84,7 @@ class MultiHeadSelfAttention(tfkl.Layer):
         return output, weights
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "n_heads": self.n_heads,
         })
@@ -95,7 +95,7 @@ class TransformerBlock(tfkl.Layer):
     """Implements a Transformer block."""
 
     def __init__(self, *args, n_heads, mlp_dim, dropout, trainable=True, **kwargs):
-        super().__init__(*args, trainable=trainable, **kwargs)
+        tfkl.Layer.__init__(self, *args, trainable=trainable, **kwargs)
         self.n_heads = n_heads
         self.mlp_dim = mlp_dim
         self.dropout = dropout
@@ -144,7 +144,7 @@ class TransformerBlock(tfkl.Layer):
         return x + y, weights
 
     def get_config(self):
-        config = super().get_config()
+        config = super().get_config().copy()
         config.update({
             "n_heads": self.n_heads,
             "mlp_dim": self.mlp_dim,
