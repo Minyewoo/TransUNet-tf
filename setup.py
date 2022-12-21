@@ -16,10 +16,10 @@ exec(open("transunet/version.py").read())
 setup(
     name="transunet",
     version=__version__,
-    description="Tensorflow Extra Utilities. https://github.com/awsaf49/TransUNet-tf",
+    description="Tensorflow Extra Utilities. https://github.com/Minyewoo/TransUNet-tf",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/awsaf49/TransUNet-tf",
+    url="https://github.com/Minyewoo/TransUNet-tf",
     author="Awsaf",
     author_email="awsaf49@gmail.com",
     classifiers=[
