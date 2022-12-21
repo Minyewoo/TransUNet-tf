@@ -47,7 +47,7 @@ def TransUNet(image_size=224,
         if patch_size == 0:
             patch_size = 1
 
-        resnet50v2, features = resnet_embeddings(x, image_size=image_size, n_skip=n_skip, pretrain=pretrain)
+        resnet50v2, features = resnet_embeddings(x, image_size=image_size, n_skip=n_skip, pretrain=pretrain, n_input_channels=n_input_channels)
         if freeze_enc_cnn:
             resnet50v2.trainable = False
         y = resnet50v2.get_layer("conv4_block6_preact_relu").output
