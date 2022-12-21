@@ -30,6 +30,15 @@ class SegmentationHead(tfkl.Layer):
         x = self.act(x)
         return x
 
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "num_classes": self.num_classes,
+            "kernel_size": self.kernel_size,
+            "final_act": self.final_act
+        })
+        return config
+
 
 class Conv2DReLu(tfkl.Layer):
     def __init__(self, filters, kernel_size, padding="same", strides=1, **kwargs):
@@ -53,6 +62,16 @@ class Conv2DReLu(tfkl.Layer):
         x = tf.nn.relu(x)
         return x
 
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "filters": self.filters,
+            "kernel_size": self.kernel_size,
+            "padding": self.padding,
+            "strides": self.strides
+        })
+        return config
+
 
 class DecoderBlock(tfkl.Layer):
     def __init__(self, filters, **kwargs):
@@ -73,6 +92,12 @@ class DecoderBlock(tfkl.Layer):
         x = self.conv2(x)
         return x
 
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "filters": self.filters,
+        })
+        return config
 
 class DecoderCup(tfkl.Layer):
     def __init__(self, decoder_channels, n_skip=3, **kwargs):
@@ -94,3 +119,11 @@ class DecoderCup(tfkl.Layer):
                 skip = None
             x = decoder_block(x, skip=skip)
         return x
+
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "decoder_channels": self.decoder_channels,
+            "n_skip": self.n_skip,
+        })
+        return config

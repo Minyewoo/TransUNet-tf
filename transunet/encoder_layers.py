@@ -83,6 +83,13 @@ class MultiHeadSelfAttention(tfkl.Layer):
         output = self.combine_heads(concat_attention)
         return output, weights
 
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "n_heads": self.n_heads,
+        })
+        return config
+
 
 class TransformerBlock(tfkl.Layer):
     """Implements a Transformer block."""
@@ -135,3 +142,12 @@ class TransformerBlock(tfkl.Layer):
         y = self.layernorm2(x)
         y = self.mlpblock(y)
         return x + y, weights
+
+    def get_config(self):
+        config = super().get_config()
+        config.update({
+            "n_heads": self.n_heads,
+            "mlp_dim": self.mlp_dim,
+            "dropout": self.dropout
+        })
+        return config
